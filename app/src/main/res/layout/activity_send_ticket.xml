@@ -28,7 +28,7 @@
         android:layout_below="@+id/tvPrioritySendTicket"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="tru"
+        android:layout_alignParentRight="true"
         />
 
 
