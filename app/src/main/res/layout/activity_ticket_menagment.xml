@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.bidzis.rsystem.Ticket.TicketMenagmentActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get All"
+        android:id="@+id/btGetAllTicketMenagment"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get By Type"
+        android:id="@+id/btGetByTypeTicketMenagment"
+        android:layout_below="@+id/btGetAllTicketMenagment"
+        android:layout_alignRight="@+id/btGetAllTicketMenagment"
+        android:layout_alignEnd="@+id/btGetAllTicketMenagment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Ticket By Type"
+        android:id="@+id/btGetTicketByTypeTicketMenagment"
+        android:layout_below="@+id/btGetByTypeTicketMenagment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btGetByTypeTicketMenagment"
+        android:layout_alignEnd="@+id/btGetByTypeTicketMenagment" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get By Priority"
+        android:id="@+id/btGetByPriorityTicketMenagment"
+        android:layout_below="@+id/btGetTicketByTypeTicketMenagment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btGetTicketByTypeTicketMenagment"
+        android:layout_alignEnd="@+id/btGetTicketByTypeTicketMenagment" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get By Project"
+        android:id="@+id/btGetByProjectTicketMenagment"
+        android:layout_below="@+id/btGetByPriorityTicketMenagment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btGetByPriorityTicketMenagment"
+        android:layout_alignEnd="@+id/btGetByPriorityTicketMenagment" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get By User"
+        android:id="@+id/btGetByUserTicketMenagment"
+        android:layout_below="@+id/btGetByProjectTicketMenagment"
+        android:layout_alignRight="@+id/btGetByProjectTicketMenagment"
+        android:layout_alignEnd="@+id/btGetByProjectTicketMenagment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Ticket"
+        android:id="@+id/btSendTicketTicketMenagment"
+        android:layout_below="@+id/btGetByUserTicketMenagment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Ticket"
+        android:id="@+id/btSaveTicketTicketMenagment"
+        android:layout_below="@+id/btSendTicketTicketMenagment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btSendTicketTicketMenagment"
+        android:layout_alignEnd="@+id/btSendTicketTicketMenagment" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Ticket Witch Attachment"
+        android:id="@+id/btSaveTicketWithAttachmentTicketMenagment"
+        android:layout_below="@+id/btSaveTicketTicketMenagment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove Ticket"
+        android:id="@+id/btRemoveTicketTicketMenagment"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add History "
+        android:id="@+id/btAddHistoryTicketMenagment"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

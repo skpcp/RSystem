@@ -36,7 +36,8 @@
         <activity android:name=".Ticket.GetTicketsByProjectActivity" />
         <activity android:name=".Ticket.GetTicketByUserActivity" />
         <activity android:name=".Ticket.GetTicketsByUserActivity" />
-        <activity android:name=".Ticket.GetByTypeActivity"></activity>
+        <activity android:name=".Ticket.GetByTypeActivity" />
+        <activity android:name=".Ticket.TicketMenagmentActivity"></activity>
     </application>
 
 </manifest>
