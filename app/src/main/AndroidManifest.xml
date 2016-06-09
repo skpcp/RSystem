@@ -29,7 +29,11 @@
         <activity android:name=".User.SaveUserActivity" />
         <activity android:name=".User.ChangeUserActiveActivity" />
         <activity android:name=".User.ChangeUserActiveWindowActivity" />
-        <activity android:name=".UserSettings.ChangeEmailActivity"></activity>
+        <activity android:name=".UserSettings.ChangeEmailActivity" />
+        <activity android:name=".UserSettings.ChangeLoginActivity" />
+        <activity android:name=".UserSettings.ChangePasswordActivity" />
+        <activity android:name=".User.UpdateProjectForUserActivity" />
+        <activity android:name=".User.UpdateProjectForUserProjectListActivity"></activity>
     </application>
 
 </manifest>

@@ -22,6 +22,7 @@ public class UserManagementActivity extends AppCompatActivity {
         final Button btRemoveUser = (Button) findViewById(R.id.btRemoveUsers);
         final Button btSaveUser = (Button) findViewById(R.id.btSaveUser);
         final Button btChangeActivity = (Button) findViewById(R.id.btChangeUsersActivity);
+        final Button btUpdateProjectsForUser = (Button) findViewById(R.id.btAddProjectForUser);
 
 
         assert btShowAllUSers != null;
@@ -80,5 +81,14 @@ public class UserManagementActivity extends AppCompatActivity {
                 UserManagementActivity.this.startActivity(intent);
             }
         });
+        assert btUpdateProjectsForUser != null;
+        btUpdateProjectsForUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(UserManagementActivity.this, UpdateProjectForUserActivity.class);
+                UserManagementActivity.this.startActivity(intent);
+            }
+        });
+
     }
 }

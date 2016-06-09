@@ -65,8 +65,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     public void singInUser(JSONObject userLogin){
-//        Intent intent  = new Intent(LoginActivity.this, UserManagementActivity.class);
-//        LoginActivity.this.startActivity(intent);
+        Intent intent  = new Intent(LoginActivity.this, UserManagementActivity.class);
+        LoginActivity.this.startActivity(intent);
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url  = getString(R.string.ip) + "/projektz/users/userLogin";
         JsonObjectRequest request = new JsonObjectRequest
