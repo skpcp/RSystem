@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.bidzis.rsystem.User.UserManagementActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get All Users"
+        android:id="@+id/btGetAllUsersUsersManagement"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Users By Activity"
+        android:id="@+id/btGetUsersByActivityUsersManagement"
+        android:layout_below="@+id/btGetAllUsersUsersManagement"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btGetAllUsersUsersManagement"
+        android:layout_alignEnd="@+id/btGetAllUsersUsersManagement" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get User by Name and Surname"
+        android:id="@+id/btGetUserByNameAndSurname"
+        android:layout_below="@+id/btGetUsersByActivityUsersManagement"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Users By Role"
+        android:id="@+id/btGetUsersByRole"
+        android:layout_below="@+id/btGetUserByNameAndSurname"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btGetUserByNameAndSurname"
+        android:layout_alignEnd="@+id/btGetUserByNameAndSurname" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove Users"
+        android:id="@+id/btRemoveUsers"
+        android:layout_below="@+id/btGetUsersByRole"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btGetUsersByRole"
+        android:layout_alignEnd="@+id/btGetUsersByRole" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save User"
+        android:id="@+id/btSaveUser"
+        android:layout_below="@+id/btRemoveUsers"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btRemoveUsers"
+        android:layout_alignEnd="@+id/btRemoveUsers" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change User Activity"
+        android:id="@+id/btChangeUsersActivity"
+        android:layout_below="@+id/btSaveUser"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btSaveUser"
+        android:layout_alignEnd="@+id/btSaveUser" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Projects For User"
+        android:id="@+id/btAddProjectForUser"
+        android:layout_below="@+id/btChangeUsersActivity"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btChangeUsersActivity"
+        android:layout_alignEnd="@+id/btChangeUsersActivity" />
+</RelativeLayout>

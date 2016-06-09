@@ -3,6 +3,7 @@
     package="com.example.bidzis.rsystem">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +18,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".User.RegisterUserActivity" />
-        <activity android:name=".Ticket.SendTicketActivity"></activity>
+        <activity android:name=".Ticket.SendTicketActivity" />
+        <activity android:name=".User.UserManagementActivity" />
+        <activity android:name=".UserSettings.UserSettingsActivity" />
+        <activity android:name=".User.ShowAllUsersActivity" />
+        <activity android:name=".User.GetUserByActivityActivity" />
+        <activity android:name=".User.GetUserByNameAndSurnameActivity" />
+        <activity android:name=".User.GetUsersByRoleActivity" />
+        <activity android:name=".User.RemoveUsersActivity" />
+        <activity android:name=".User.SaveUserActivity" />
+        <activity android:name=".User.ChangeUserActiveActivity" />
+        <activity android:name=".User.ChangeUserActiveWindowActivity" />
+        <activity android:name=".UserSettings.ChangeEmailActivity"></activity>
     </application>
 
 </manifest>

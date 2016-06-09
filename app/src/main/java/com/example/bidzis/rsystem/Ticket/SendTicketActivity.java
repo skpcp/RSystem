@@ -8,6 +8,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bidzis.rsystem.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,6 +43,7 @@ public class SendTicketActivity extends AppCompatActivity {
     String obraz;
     String fileName;
     String mineType;
+    boolean withAttachment = false;
     final String[] id = {""};
     final String[] idAttachment = {""};
 
@@ -56,19 +59,14 @@ public class SendTicketActivity extends AppCompatActivity {
         final Spinner spinnerPriority = (Spinner) findViewById(R.id.spinner);
 
 
-        String ticketWithAttachmentString = "{\n" +
-                "  \"attachments\": [\n" +
-                "    0\n" +
-                "  ],\n" +
-                "  \"description\": \"string\",\n" +
-                "  \"id\": 0,\n" +
-                "  \"kind\": \"ZGLOSZENIE\",\n" +
-                "  \"priority\": \"string\",\n" +
-                "  \"project\": \"string\",\n" +
-                "  \"type\": \"WEWNETRZNY\",\n" +
-                "  \"user\": \"string\"\n" +
-                "}";
-        String tickedWichoutAttachmentString = "{\n" +
+        final String user = "GandalfTheGray";
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.priority_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPriority.setAdapter(adapter);
+
+
+        final String tickedWichoutAttachmentString = "{\n" +
                 "  \"description\": \"string\",\n" +
                 "  \"id\": 0,\n" +
                 "  \"kind\": \"ZGLOSZENIE\",\n" +
@@ -83,6 +81,7 @@ public class SendTicketActivity extends AppCompatActivity {
         btAddAttachment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                withAttachment = true;
                 Intent intent = new Intent()
                         .setType("*/*")
                         .setAction(Intent.ACTION_GET_CONTENT);
@@ -95,25 +94,169 @@ public class SendTicketActivity extends AppCompatActivity {
         btSendTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String binariesID = "";
-                String attachmnetID = "";
-                String binaries = getBinaries();
-                String binariesString = "{\"binary\": \""+binaries+"\"}";
-                String url  = getString(R.string.ip) + "/projektz/binaries/saveBinary";
-                JSONObject binariesJson = new JSONObject();
-                try {
-                    binariesJson = new JSONObject(binariesString);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                saveBinaries(url,binariesJson);
-                binariesID = id[0];
+                if(withAttachment){
+                    String ticketWithAttachmentString = "{\n" +
+                            "  \"attachments\": [\n" +
+                            "    0\n" +
+                            "  ],\n" +
+                            "  \"description\": \"string\",\n" +
+                            "  \"id\": 0,\n" +
+                            "  \"kind\": \"ZGLOSZENIE\",\n" +
+                            "  \"priority\": \"string\",\n" +
+                            "  \"project\": \"string\",\n" +
+                            "  \"type\": \"WEWNETRZNY\",\n" +
+                            "  \"user\": \"string\"\n" +
+                            "}";
+                    JSONObject ticketWithAttachment = new JSONObject();
 
+                    try {
+                        ticketWithAttachment = new JSONObject(ticketWithAttachmentString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        ticketWithAttachment.put("description",etDescription.getText().toString());
+                        ticketWithAttachment.put("priority",spinnerPriority.getSelectedItem().toString());
+                        ticketWithAttachment.put("project",etProjectName.getText().toString());
+                        ticketWithAttachment.put("user",user);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    String binariesID = "";
+                    String attachmnetID = "";
+                    String binaries = getBinaries();
+                    String binariesString = "{\"binary\": \""+binaries+"\"}";
+                    String url  = getString(R.string.ip) + "/projektz/binaries/saveBinary";
+                    JSONObject binariesJson = new JSONObject();
+                    try {
+                        binariesJson = new JSONObject(binariesString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    saveBinaries(url,binariesJson,ticketWithAttachment);
+                    binariesID = id[0];
+                }else{
+                    String ticketWithoutAttachmentString = "{\n" +
+                            "  \"description\": \"string\",\n" +
+                            "  \"id\": 0,\n" +
+                            "  \"kind\": \"ZGLOSZENIE\",\n" +
+                            "  \"priority\": \"string\",\n" +
+                            "  \"project\": \"string\",\n" +
+                            "  \"type\": \"WEWNETRZNY\",\n" +
+                            "  \"user\": \"string\"\n" +
+                            "}";
+                    JSONObject ticketWithoutAttachment = new JSONObject();
+                    try {
+                        ticketWithoutAttachment = new JSONObject(tickedWichoutAttachmentString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        ticketWithoutAttachment.put("description",etDescription.getText().toString());
+                        ticketWithoutAttachment.put("priority",spinnerPriority.getSelectedItem().toString());
+                        ticketWithoutAttachment.put("project",etProjectName.getText().toString());
+                        ticketWithoutAttachment.put("user",user);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    saveTicketWichoutAttachments(ticketWithoutAttachment);
+
+                }
 
             }
         });
     }
-    public void saveAttachments(String binariesID) throws JSONException {
+    public void saveTicketWichoutAttachments(JSONObject ticketWichoutAttachmments){
+
+        String url  = getString(R.string.ip) + "/projektz/tickets/saveTicket";
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest
+                (Request.Method.POST, url, ticketWichoutAttachmments, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(getApplicationContext(),"Ticket was send", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                        new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                    Toast.makeText(getApplicationContext(), "Timeout",
+                                            Toast.LENGTH_LONG).show();
+                                } else if (error instanceof AuthFailureError) {
+                                    Toast.makeText(getApplicationContext(), "1",
+                                            Toast.LENGTH_LONG).show();
+                                } else if (error instanceof ServerError) {
+                                    Toast.makeText(getApplicationContext(), "Bląd serwera",
+                                            Toast.LENGTH_LONG).show();
+                                } else if (error instanceof NetworkError) {
+                                    Toast.makeText(getApplicationContext(), "Problem z połączeniem internetowym",
+                                            Toast.LENGTH_LONG).show();
+
+                                } else if (error instanceof ParseError) {
+                                    Toast.makeText(getApplicationContext(), "Nie znaleziono użytkownika w bazie",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+
+        requestQueue.add(request);
+    }
+    public void saveTicketWithAttachment(String idAttachment, JSONObject ticket) throws JSONException {
+        JSONArray attachments = new JSONArray();
+        String attachmentObject ="{\n" +
+                "      \"id\": 0\n" +
+                "    }";
+
+        JSONObject test = new JSONObject(attachmentObject);
+        test.put("id",idAttachment);
+        attachments.put(test);
+        ticket.put("attachments",attachments);
+
+        String url  = getString(R.string.ip) + "/projektz/tickets/saveTicketWithAttachments";
+
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest
+                (Request.Method.POST, url, ticket, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(getApplicationContext(),"Ticket was send", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                        new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                    Toast.makeText(getApplicationContext(), "Timeout",
+                                            Toast.LENGTH_LONG).show();
+                                } else if (error instanceof AuthFailureError) {
+                                    Toast.makeText(getApplicationContext(), "1",
+                                            Toast.LENGTH_LONG).show();
+                                } else if (error instanceof ServerError) {
+                                    Toast.makeText(getApplicationContext(), "Bląd serwera",
+                                            Toast.LENGTH_LONG).show();
+                                } else if (error instanceof NetworkError) {
+                                    Toast.makeText(getApplicationContext(), "Problem z połączeniem internetowym",
+                                            Toast.LENGTH_LONG).show();
+
+                                } else if (error instanceof ParseError) {
+                                    Toast.makeText(getApplicationContext(), "Nie znaleziono użytkownika w bazie",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
+
+        requestQueue.add(request);
+
+
+    }
+
+    public void saveAttachments(String binariesID, final JSONObject ticket) throws JSONException {
         String attachmentString = "{\n" + "  \"binary\": 50,\n" +
                 "  \"file_name\": \"string\",\n" +
                 "  \"id\": 0,\n" +
@@ -141,6 +284,7 @@ public class SendTicketActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             idAttachment[0] = response.getString("id");
+                            saveTicketWithAttachment(idAttachment[0],ticket);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -207,7 +351,7 @@ public class SendTicketActivity extends AppCompatActivity {
         //return Base64.encodeBase64String(imageByteArray);
         return android.util.Base64.encodeToString(imageByteArray,1);
     }
-    public void saveBinaries(String url, JSONObject binariesJson){
+    public void saveBinaries(String url, JSONObject binariesJson, final JSONObject ticket){
 
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest request = new JsonObjectRequest
@@ -217,7 +361,7 @@ public class SendTicketActivity extends AppCompatActivity {
                         try {
                             id[0] = response.getString("id");
                             try {
-                                saveAttachments(id[0]);
+                                saveAttachments(id[0],ticket);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
