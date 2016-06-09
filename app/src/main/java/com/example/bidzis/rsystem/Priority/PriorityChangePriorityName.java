@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class PriorityChangePriorityName extends AppCompatActivity {
 
@@ -42,6 +43,7 @@ public class PriorityChangePriorityName extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_priority_change_priority_name);
 
+        final Map<String, String> map = new HashMap<String, String>();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONArray[] jsonArray = {null};
         String url = getString(R.string.ip) + "/projektz/priorities/getAll/";
@@ -62,8 +64,8 @@ public class PriorityChangePriorityName extends AppCompatActivity {
 //                                    String PriorityName = jsonObject.getString("name");
 //                                    String PriorityResponseTime = jsonObject.getString("responseTime");
 
-                                    value.add(i,jsonObject.get("id") +"\n"+"Name:   "+jsonObject.getString("name")+("\nResponse Time:   ")+jsonObject.getString("responseTime")+("\n"));
-
+                                    value.add(i,"Name:   "+jsonObject.getString("name")+("\nResponse Time:   ")+jsonObject.getString("responseTime")+("\n"));
+                                    map.put(jsonObject.getString("name"),jsonObject.getString("id"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

@@ -1,4 +1,4 @@
-package com.example.bidzis.rsystem.Priority;
+package com.example.bidzis.rsystem.Role;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
@@ -33,19 +33,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class PriorityShowAll extends AppCompatActivity {
+public class RoleShowAll extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_priority_show_all);
-
-
+        setContentView(R.layout.activity_role_show_all);
 
         final Map<String, String> map = new HashMap<String, String>();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONArray[] jsonArray = {null};
-        String url = getString(R.string.ip)+"/projektz/priorities/getAll/";
+        String url = getString(R.string.ip)+"/projektz/roles/getAll/";
         JsonArrayRequest request = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
@@ -58,26 +56,37 @@ public class PriorityShowAll extends AppCompatActivity {
                             for (int i=0;i<len;i++){
                                 try {
                                     JSONObject jsonObject = (JSONObject) jsonArray[0].get(i);
+                                    JSONArray jsonArray1 = (JSONArray) jsonObject.get("permissions");
 //                                    String PriorityID = jsonObject.getString("id");
 //                                    String PriorityName = jsonObject.getString("name");
 //                                    String PriorityResponseTime = jsonObject.getString("responseTime");
 
-                                    value.add(i,"Name:   "+jsonObject.getString("name")+("\nResponse Time:   ")+jsonObject.getString("responseTime")+("\n"));
+                                    String permissions = "";
+                                    for (int j=0;j<jsonArray1.length();j++){
+                                        JSONObject jsonObject2 = jsonArray1.getJSONObject(j);
+                                        permissions+= jsonObject2.getString("name")+"\n";
+
+                                    }
+
+
+                                    value.add(i,"Role name: "+jsonObject.getString("name")+"\n"+permissions);
                                     map.put(jsonObject.getString("name"),jsonObject.getString("id"));
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         }
-                        final ListView listview = (ListView) findViewById(R.id.listView);
+                        final ListView listview = (ListView) findViewById(R.id.listView6);
                         Iterator it = value.iterator();
 
                         final ArrayList<String> list = new ArrayList<String>();
                         while ( it.hasNext( ) ) {
                             list.add((String) it.next());
                         }
-                        final StableArrayAdapter adapter = new StableArrayAdapter(PriorityShowAll.this,
+                        final StableArrayAdapter adapter = new StableArrayAdapter(RoleShowAll.this,
                                 android.R.layout.simple_list_item_1, list);
+                        assert listview != null;
                         listview.setAdapter(adapter);
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
@@ -148,7 +157,5 @@ public class PriorityShowAll extends AppCompatActivity {
         public boolean hasStableIds() {
             return true;
         }
-
-
     }
 }
