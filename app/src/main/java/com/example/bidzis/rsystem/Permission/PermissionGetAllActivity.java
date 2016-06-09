@@ -53,7 +53,7 @@ public class PermissionGetAllActivity extends AppCompatActivity {
                             for (int i = 0; i < len; i++) {
                                 try {
                                     JSONObject jsonObject = (JSONObject) jsonArray[0].get(i);
-                                    value.add(i,"\n"+ "Id: " + jsonObject.getString("id") +"\n"+ "Name: " + jsonObject.getString("name")+ "\n");
+                                    value.add(i,"Name: " + jsonObject.getString("name")+ "\n");
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();

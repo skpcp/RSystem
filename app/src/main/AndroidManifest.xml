@@ -34,7 +34,13 @@
         <activity android:name=".Project.ProjectRemoveActivity" />
         <activity android:name=".Project.ProjectSaveActivity" />
         <activity android:name=".Project.ProjectDetailsActivity" />
-        <activity android:name=".Project.ProjectChangeNameResultActivity"></activity>
+        <activity android:name=".Project.ProjectChangeNameResultActivity" />
+        <activity android:name=".History.HistorySaveWithAttachmentActivity" />
+        <activity android:name=".Attachments.AttachmentsManagementActivity" />
+        <activity android:name=".Attachments.AttachmentsGetByMineTypeActivity" />
+        <activity android:name=".Attachments.AttachmentsGetAllActivity" />
+        <activity android:name=".Attachments.AttachmentsRemoveActivity" />
+        <activity android:name=".Attachments.AttachmentsDetailsActivity"></activity>
     </application>
 
 </manifest>

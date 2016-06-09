@@ -19,6 +19,7 @@ public class HistoryManagementActivity extends AppCompatActivity {
         final Button btGetAll = (Button) findViewById(R.id.btGetAllHistories);
         final Button btRemove = (Button) findViewById(R.id.btRemoveHistory);
         final Button btSave = (Button) findViewById(R.id.btSaveHistory);
+        final Button btSaveWithAttachment = (Button) findViewById(R.id.btSaveHistoryWithAttachment);
 
         assert btGetAll != null;
         btGetAll.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +42,14 @@ public class HistoryManagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HistoryManagementActivity.this, HistorySaveActivity.class);
+                HistoryManagementActivity.this.startActivity(intent);
+            }
+        });
+        assert btSaveWithAttachment != null;
+        btSaveWithAttachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HistoryManagementActivity.this, HistorySaveWithAttachmentActivity.class);
                 HistoryManagementActivity.this.startActivity(intent);
             }
         });

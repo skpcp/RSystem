@@ -1,7 +1,6 @@
-package com.example.bidzis.rsystem.History;
+package com.example.bidzis.rsystem.Attachments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +21,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bidzis.rsystem.R;
 
@@ -35,17 +35,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class HistoryGetAllActivity extends AppCompatActivity {
+public class AttachmentsRemoveActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_get_all);
+        setContentView(R.layout.activity_attachments_remove);
         final Map<String, String> map = new HashMap<String, String>();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONArray[] jsonArray = {null};
-        String url = getString(R.string.ip) + "/projektz/histories/getAll";
-        JsonArrayRequest request2 = new JsonArrayRequest
+        String url = getString(R.string.ip) + "/projektz/attachments/getAllAtachments";
+        final JSONArray[] finalJsonArray = {new JSONArray()};
+        JsonArrayRequest request = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
@@ -57,46 +58,73 @@ public class HistoryGetAllActivity extends AppCompatActivity {
                             for (int i = 0; i < len; i++) {
                                 try {
                                     JSONObject jsonObject = (JSONObject) jsonArray[0].get(i);
-                                    JSONObject jsonObject1 = (JSONObject) jsonObject.get("user");
-                                    value.add(i,"Login: " + jsonObject1.getString("login") + "\n"+ "Date: " + jsonObject.getString("date")+ "\n" + "Description: " + jsonObject.getString("description"));
-                                    map.put(jsonObject1.getString("login"),jsonObject.getString("id"));
+                                    value.add(i,"Name: " + jsonObject.getString("name") + "\n"+ "File name: " + jsonObject.getString("file_name")+ "\n" + "Type: " + jsonObject.getString("mine_type"));
+                                    map.put(jsonObject.getString("name"),jsonObject.getString("id"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         }
-                        final ListView listview = (ListView) findViewById(R.id.lvHistoryGetAll);
+                        final ListView listview = (ListView) findViewById(R.id.lvAttachmentsRemove);
                         Iterator it = value.iterator();
 
                         final ArrayList<String> list = new ArrayList<String>();
                         while (it.hasNext()) {
                             list.add((String) it.next());
                         }
-                        final StableArrayAdapter adapter = new StableArrayAdapter(HistoryGetAllActivity.this,
+                        final StableArrayAdapter adapter = new StableArrayAdapter(AttachmentsRemoveActivity.this,
                                 android.R.layout.simple_list_item_1, list);
-                        assert listview != null;
                         listview.setAdapter(adapter);
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                                final String aTekst = ((TextView)view).getText().toString();
+                                String aName = String.valueOf(aTekst.charAt(6));
+                                for (int i = 7; i < aTekst.length();i++)
+                                {
+                                    if(aTekst.charAt(i)=='\n') {
+                                        break;
+                                    }else aName = aName + String.valueOf(aTekst.charAt(i));
+                                }
+                                String value = map.get(aName);
+                                String url = getString(R.string.ip) + "/projektz/attachments/removeAttachmentById/" + value;
+                                JsonObjectRequest request = new JsonObjectRequest
+                                        (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
 
-                                    final String aTekst = ((TextView)view).getText().toString();
-                                    String aName = String.valueOf(aTekst.charAt(7));
-                                    for (int i = 8; i < aTekst.length();i++)
-                                    {
-                                        if(aTekst.charAt(i)=='\n') {
-                                            break;
-                                        }else aName = aName + String.valueOf(aTekst.charAt(i));
-                                    }
-                                    String value = map.get(aName);
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                Toast.makeText(getApplicationContext(), "Remove Succesful",
+                                                        Toast.LENGTH_LONG).show();
 
+                                            }
+                                        }, new Response.ErrorListener() {
 
-                                Intent intent = new Intent(HistoryGetAllActivity.this, HistoryDetailsActivity.class);
-                                        intent.putExtra("id", value);
-                                HistoryGetAllActivity.this.startActivity(intent);
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                                    Toast.makeText(getApplicationContext(), "Timeout",
+                                                            Toast.LENGTH_LONG).show();
+                                                } else if (error instanceof AuthFailureError) {
+                                                    Toast.makeText(getApplicationContext(), "1",
+                                                            Toast.LENGTH_LONG).show();
+                                                } else if (error instanceof ServerError) {
+                                                    Toast.makeText(getApplicationContext(), "Server Error",
+                                                            Toast.LENGTH_LONG).show();
+                                                } else if (error instanceof NetworkError) {
+                                                    Toast.makeText(getApplicationContext(), "Network Error",
+                                                            Toast.LENGTH_LONG).show();
+
+                                                } else if (error instanceof ParseError) {
+                                                    Toast.makeText(getApplicationContext(), "Remove Succesful",
+                                                            Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+                                requestQueue.add(request);
 
                             }
+
                         });
                     }
                 }, new Response.ErrorListener() {
@@ -110,19 +138,18 @@ public class HistoryGetAllActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "1",
                                     Toast.LENGTH_LONG).show();
                         } else if (error instanceof ServerError) {
-                            Toast.makeText(getApplicationContext(), "Bląd serwera",
+                            Toast.makeText(getApplicationContext(), "Server Error",
                                     Toast.LENGTH_LONG).show();
                         } else if (error instanceof NetworkError) {
-                            Toast.makeText(getApplicationContext(), "Problem z połączeniem internetowym",
+                            Toast.makeText(getApplicationContext(), "Network Error",
                                     Toast.LENGTH_LONG).show();
                         } else if (error instanceof ParseError) {
-                            Toast.makeText(getApplicationContext(), "Błąd",
+                            Toast.makeText(getApplicationContext(), "Parse Error",
                                     Toast.LENGTH_LONG).show();
                         }
                     }
                 });
-        requestQueue.add(request2);
-
+        requestQueue.add(request);
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
@@ -147,7 +174,6 @@ public class HistoryGetAllActivity extends AppCompatActivity {
         public boolean hasStableIds() {
             return true;
         }
+
     }
 }
-
-
