@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">RSystem</string>
-    <string name="ip">http://192.168.43.84:8080</string>
+    <string name="ip">http://192.168.43.126:8080</string>
+
+    <string-array name="type_array">
+        <item>WEWNETRZNY</item>
+        <item>ZEWNETRZNY</item>
+    </string-array>
+    <string-array name="priority_array">
+        <item>Natychmiast</item>
+    </string-array>
 </resources>
