@@ -29,7 +29,14 @@
         <activity android:name=".User.SaveUserActivity" />
         <activity android:name=".User.ChangeUserActiveActivity" />
         <activity android:name=".User.ChangeUserActiveWindowActivity" />
-        <activity android:name=".UserSettings.ChangeEmailActivity"></activity>
+        <activity android:name=".UserSettings.ChangeEmailActivity" />
+        <activity android:name=".Ticket.GetTicketByTypeActivity" />
+        <activity android:name=".Ticket.GetAllActivity" />
+        <activity android:name=".Ticket.GetTicketsByPriorityActivity" />
+        <activity android:name=".Ticket.GetTicketsByProjectActivity" />
+        <activity android:name=".Ticket.GetTicketByUserActivity" />
+        <activity android:name=".Ticket.GetTicketsByUserActivity" />
+        <activity android:name=".Ticket.GetByTypeActivity"></activity>
     </application>
 
 </manifest>
