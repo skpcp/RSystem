@@ -23,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bidzis.rsystem.Ticket.SendTicketActivity;
 import com.example.bidzis.rsystem.User.UserManagementActivity;
+import com.example.bidzis.rsystem.User.UserSiteActivity;
 import com.example.bidzis.rsystem.UserSettings.UserSettingsActivity;
 
 import org.json.JSONException;
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     public void singInUser(JSONObject userLogin){
-        Intent intent  = new Intent(LoginActivity.this, UserManagementActivity.class);
+        Intent intent  = new Intent(LoginActivity.this, UserSiteActivity.class);
         LoginActivity.this.startActivity(intent);
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url  = getString(R.string.ip) + "/projektz/users/userLogin";
@@ -79,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                             object = (JSONObject) response.get("role");
                             if ("ADMIN".equals(object.getString("name")))
                             {
-                                Intent intent  = new Intent(LoginActivity.this, UserSettingsActivity.class);
+                                Intent intent  = new Intent(LoginActivity.this, UserSiteActivity.class);
                                 try {
                                     intent.putExtra("id",response.getString("id"));
                                     intent.putExtra("login",response.getString("login"));
@@ -93,8 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
 
                     }
                 },

@@ -33,7 +33,11 @@
         <activity android:name=".UserSettings.ChangeLoginActivity" />
         <activity android:name=".UserSettings.ChangePasswordActivity" />
         <activity android:name=".User.UpdateProjectForUserActivity" />
-        <activity android:name=".User.UpdateProjectForUserProjectListActivity"></activity>
+        <activity android:name=".User.UpdateProjectForUserProjectListActivity" />
+        <activity
+            android:name=".User.UserSiteActivity"
+            android:label="@string/title_activity_user_site"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
