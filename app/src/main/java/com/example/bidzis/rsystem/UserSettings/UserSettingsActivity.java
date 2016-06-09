@@ -23,7 +23,7 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         final String aId = extras.getString("id");
-
+        String elo = "";
         assert btChangeEmail != null;
         btChangeEmail.setOnClickListener(new View.OnClickListener() {
             @Override
