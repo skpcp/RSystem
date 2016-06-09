@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class ProjectRemoveActivity extends AppCompatActivity {
 
@@ -40,7 +41,7 @@ public class ProjectRemoveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_remove);
-
+        final Map<String, String> map = new HashMap<String, String>();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONArray[] jsonArray = {null};
         String url = getString(R.string.ip) + "/projektz/projects/getAll";
@@ -58,8 +59,8 @@ public class ProjectRemoveActivity extends AppCompatActivity {
                                 try {
                                     JSONObject jsonObject = (JSONObject) jsonArray[0].get(i);
 
-                                    value.add(i, jsonObject.getString("id") +"\n"+ "Name: " + jsonObject.getString("name")+ "\n");
-
+                                    value.add(i,"Name: " + jsonObject.getString("name")+ "\n");
+                                    map.put(jsonObject.getString("name"),jsonObject.getString("id"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -79,21 +80,16 @@ public class ProjectRemoveActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                final ArrayList<Integer> help = new ArrayList<Integer>();
-                                for (int j = 0; j < 10; j++) {
-                                    help.add(j);
-                                }
-
-                                final String aTekst = ((TextView) view).getText().toString();
-                                String aId = String.valueOf(aTekst.charAt(0));
-                                for (int i = 1; i < aTekst.length(); i++) {
-                                    if (aTekst.charAt(i) == '\n')
+                                final String aTekst = ((TextView)view).getText().toString();
+                                String aName = String.valueOf(aTekst.charAt(6));
+                                for (int i = 7; i < aTekst.length();i++)
+                                {
+                                    if(aTekst.charAt(i)=='\n') {
                                         break;
-                                    if (help.contains(Integer.valueOf(String.valueOf(aTekst.charAt(i))))) {
-                                        aId = aId + String.valueOf(aTekst.charAt(i));
-                                    } else break;
+                                    }else aName = aName + String.valueOf(aTekst.charAt(i));
                                 }
-                                String url = getString(R.string.ip) + "/projektz/projects/removeProject/" + aId;
+                                String value = map.get(aName);
+                                String url = getString(R.string.ip) + "/projektz/projects/removeProject/" + value;
                                 JsonObjectRequest request = new JsonObjectRequest
                                         (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
 
