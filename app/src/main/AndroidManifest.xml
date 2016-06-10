@@ -71,7 +71,18 @@
         <activity android:name=".Attachments.AttachmentsGetByMineTypeActivity" />
         <activity android:name=".Attachments.AttachmentsGetAllActivity" />
         <activity android:name=".Attachments.AttachmentsRemoveActivity" />
-        <activity android:name=".Attachments.AttachmentsDetailsActivity"></activity>
+        <activity android:name=".Attachments.AttachmentsDetailsActivity"/>
+        <activity android:name=".Priority.PriorityManagement" />
+        <activity android:name=".Priority.PriorityChangePriorityName" />
+        <activity android:name=".Priority.PriorityShowAll" />
+        <activity android:name=".Priority.PriorityShowByName" />
+        <activity android:name=".Priority.PrioritySave" />
+        <activity android:name=".Priority.PriorityRemove" />
+        <activity android:name=".Priority.PriorityChangePriorityNameWindow" />
+        <activity android:name=".Role.RoleManagement" />
+        <activity android:name=".Role.RoleSave" />
+        <activity android:name=".Role.RoleRemove" />
+        <activity android:name=".Role.RoleShowAll"></activity>
     </application>
 
 </manifest>

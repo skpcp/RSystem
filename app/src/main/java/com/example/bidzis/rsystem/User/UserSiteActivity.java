@@ -17,8 +17,10 @@ import android.view.MenuItem;
 import com.example.bidzis.rsystem.Attachments.AttachmentsManagementActivity;
 import com.example.bidzis.rsystem.History.HistoryManagementActivity;
 import com.example.bidzis.rsystem.Permission.PermissionManagementActivity;
+import com.example.bidzis.rsystem.Priority.PriorityManagement;
 import com.example.bidzis.rsystem.Project.ProjectManagementActivity;
 import com.example.bidzis.rsystem.R;
+import com.example.bidzis.rsystem.Role.RoleManagement;
 import com.example.bidzis.rsystem.Ticket.TicketMenagmentActivity;
 import com.example.bidzis.rsystem.UserSettings.UserSettingsActivity;
 
@@ -117,6 +119,13 @@ public class UserSiteActivity extends AppCompatActivity
             UserSiteActivity.this.startActivity(intent);
         }else if (id == R.id.nav_project) {
             Intent intent  = new Intent(UserSiteActivity.this, ProjectManagementActivity.class);
+            UserSiteActivity.this.startActivity(intent);
+        }
+        else if (id == R.id.nav_role) {
+            Intent intent  = new Intent(UserSiteActivity.this, RoleManagement.class);
+            UserSiteActivity.this.startActivity(intent);
+        }else if (id == R.id.nav_priority) {
+            Intent intent  = new Intent(UserSiteActivity.this, PriorityManagement.class);
             UserSiteActivity.this.startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
