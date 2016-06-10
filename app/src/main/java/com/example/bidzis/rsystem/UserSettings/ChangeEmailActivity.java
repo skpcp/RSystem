@@ -61,41 +61,47 @@ public class ChangeEmailActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                String url = getString(R.string.ip)+"/projektz/users/changeEmail";
-                JsonObjectRequest request = new JsonObjectRequest
-                        (Request.Method.POST, url, emailChangeJson, new Response.Listener<JSONObject>() {
+                String email = etEmail.getText().toString().trim();
 
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                Toast.makeText(getApplicationContext(), "Change Email Sucesfull",
-                                        Toast.LENGTH_LONG).show();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if (email.matches(emailPattern)) {
+                    String url = getString(R.string.ip) + "/projektz/users/changeEmail";
+                    JsonObjectRequest request = new JsonObjectRequest
+                            (Request.Method.POST, url, emailChangeJson, new Response.Listener<JSONObject>() {
 
-                            }
-                        }, new Response.ErrorListener() {
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                                    Toast.makeText(getApplicationContext(), "Timeout",
-                                            Toast.LENGTH_LONG).show();
-                                } else if (error instanceof AuthFailureError) {
-                                    Toast.makeText(getApplicationContext(), "1",
-                                            Toast.LENGTH_LONG).show();
-                                } else if (error instanceof ServerError) {
-                                    Toast.makeText(getApplicationContext(), "Bląd serwera",
-                                            Toast.LENGTH_LONG).show();
-                                } else if (error instanceof NetworkError) {
-                                    Toast.makeText(getApplicationContext(), "Problem z połączeniem internetowym",
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    Toast.makeText(getApplicationContext(), "Change Email Sucesfull",
                                             Toast.LENGTH_LONG).show();
 
-                                } else if (error instanceof ParseError) {
-                                    Toast.makeText(getApplicationContext(), "Activate Succesful",
-                                            Toast.LENGTH_LONG).show();
                                 }
-                            }
-                        });
-                requestQueue.add(request);
+                            }, new Response.ErrorListener() {
 
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                        Toast.makeText(getApplicationContext(), "Timeout",
+                                                Toast.LENGTH_LONG).show();
+                                    } else if (error instanceof AuthFailureError) {
+                                        Toast.makeText(getApplicationContext(), "1",
+                                                Toast.LENGTH_LONG).show();
+                                    } else if (error instanceof ServerError) {
+                                        Toast.makeText(getApplicationContext(), "Bląd serwera",
+                                                Toast.LENGTH_LONG).show();
+                                    } else if (error instanceof NetworkError) {
+                                        Toast.makeText(getApplicationContext(), "Problem z połączeniem internetowym",
+                                                Toast.LENGTH_LONG).show();
+
+                                    } else if (error instanceof ParseError) {
+                                        Toast.makeText(getApplicationContext(), "Activate Succesful",
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                    requestQueue.add(request);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

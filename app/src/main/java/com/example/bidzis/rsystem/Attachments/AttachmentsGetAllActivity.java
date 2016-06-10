@@ -22,6 +22,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bidzis.rsystem.History.HistoryDetailsActivity;
 import com.example.bidzis.rsystem.R;
@@ -38,6 +39,8 @@ import java.util.Map;
 
 public class AttachmentsGetAllActivity extends AppCompatActivity {
 
+    String binariess = "";
+    boolean flaga = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class AttachmentsGetAllActivity extends AppCompatActivity {
         final Map<String, String> map = new HashMap<String, String>();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONArray[] jsonArray = {null};
+
         String url = getString(R.string.ip) + "/projektz/attachments/getAllAtachments";
         JsonArrayRequest request2 = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -91,10 +95,10 @@ public class AttachmentsGetAllActivity extends AppCompatActivity {
                                 }
                                 String value = map.get(aName);
 
+                                getBinaries(value);
 
-                                Intent intent = new Intent(AttachmentsGetAllActivity.this, AttachmentsDetailsActivity.class);
-                                intent.putExtra("id", value);
-                                AttachmentsGetAllActivity.this.startActivity(intent);
+
+
 
                             }
                         });
@@ -147,6 +151,53 @@ public class AttachmentsGetAllActivity extends AppCompatActivity {
         public boolean hasStableIds() {
             return true;
         }
+    }
+    public void getBinaries(String attachmentId){
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+        final String[] binaries = {""};
+        String url = getString(R.string.ip)+"/projektz/attachments/getAttachmentById/"+attachmentId;
+        JsonObjectRequest request = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject binary = response.getJSONObject("binary");
+                            binariess = binary.getString("binary");
+                            Intent intent = new Intent(AttachmentsGetAllActivity.this, AttachmentsDetailsActivity.class);
+                            intent.putExtra("binary", binariess);
+                            AttachmentsGetAllActivity.this.startActivity(intent);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            Toast.makeText(getApplicationContext(), "Timeout",
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(getApplicationContext(), "1",
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(getApplicationContext(), "Bląd serwera",
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(getApplicationContext(), "Problem z połączeniem internetowym",
+                                    Toast.LENGTH_LONG).show();
+
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(getApplicationContext(), "Activate Succesful",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+        requestQueue.add(request);
+
     }
 }
 
