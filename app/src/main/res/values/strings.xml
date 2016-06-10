@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">RSystem</string>
     <string name="ip">http://192.168.43.221:8080</string>
+
+    <string-array name="mine_type_array">
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+    </string-array>
+
 </resources>
+
+

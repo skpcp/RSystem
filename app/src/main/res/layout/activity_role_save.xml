@@ -37,21 +37,28 @@
         android:layout_below="@+id/etRoleName"
         android:layout_centerHorizontal="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etRolePermissionName"
-        android:layout_below="@+id/tvRolePermissionName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/etRoleName"
-        android:layout_alignEnd="@+id/etRoleName" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save role"
         android:id="@+id/btRoleSave"
-        android:layout_below="@+id/etRolePermissionName"
+        android:layout_below="@+id/tvRolePermissionName"
+        android:layout_alignLeft="@+id/tvRoleName"
+        android:layout_alignStart="@+id/tvRoleName"
+        android:layout_marginTop="72dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner2"
+        android:layout_below="@+id/tvRolePermissionName"
         android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView8"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btRoleSave" />
 </RelativeLayout>
