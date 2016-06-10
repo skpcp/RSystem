@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class HistoryRemoveActivity extends AppCompatActivity {
 
@@ -40,6 +41,7 @@ public class HistoryRemoveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_remove);
+        final Map<String, String> map = new HashMap<String, String>();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONArray[] jsonArray = {null};
         String url = getString(R.string.ip) + "/projektz/histories/getAll";
@@ -57,8 +59,8 @@ public class HistoryRemoveActivity extends AppCompatActivity {
                                 try {
                                     JSONObject jsonObject = (JSONObject) jsonArray[0].get(i);
                                     JSONObject jsonObject1 = (JSONObject) jsonObject.get("user");
-                                    value.add(i, jsonObject.get("id") + "\n" + "Login:  " + jsonObject1.getString("login") + "\n"+ "Date: " + jsonObject.getString("date")+ "\n" + "Description: " + jsonObject.getString("description"));
-
+                                    value.add(i,"Login:  " + jsonObject1.getString("login") + "\n"+ "Date: " + jsonObject.getString("date")+ "\n" + "Description: " + jsonObject.getString("description"));
+                                    map.put(jsonObject1.getString("login"),jsonObject.getString("id"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -78,21 +80,16 @@ public class HistoryRemoveActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                final ArrayList<Integer> help = new ArrayList<Integer>();
-                                for (int j = 0; j < 10; j++) {
-                                    help.add(j);
-                                }
-
-                                final String aTekst = ((TextView) view).getText().toString();
-                                String aId = String.valueOf(aTekst.charAt(0));
-                                for (int i = 1; i < aTekst.length(); i++) {
-                                    if (aTekst.charAt(i) == '\n')
+                                final String aTekst = ((TextView)view).getText().toString();
+                                String aName = String.valueOf(aTekst.charAt(7));
+                                for (int i = 8; i < aTekst.length();i++)
+                                {
+                                    if(aTekst.charAt(i)=='\n') {
                                         break;
-                                    if (help.contains(Integer.valueOf(String.valueOf(aTekst.charAt(i))))) {
-                                        aId = aId + String.valueOf(aTekst.charAt(i));
-                                    } else break;
+                                    }else aName = aName + String.valueOf(aTekst.charAt(i));
                                 }
-                                String url = getString(R.string.ip) + "/projektz/histories/removeHistoryById/" + aId;
+                                String value = map.get(aName);
+                                String url = getString(R.string.ip) + "/projektz/histories/removeHistoryById/" + value;
                                 JsonObjectRequest request = new JsonObjectRequest
                                         (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
 

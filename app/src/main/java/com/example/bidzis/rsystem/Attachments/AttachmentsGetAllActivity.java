@@ -1,4 +1,4 @@
-package com.example.bidzis.rsystem.History;
+package com.example.bidzis.rsystem.Attachments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +23,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bidzis.rsystem.History.HistoryDetailsActivity;
 import com.example.bidzis.rsystem.R;
 
 import org.json.JSONArray;
@@ -35,16 +36,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class HistoryGetAllActivity extends AppCompatActivity {
+public class AttachmentsGetAllActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_get_all);
+        setContentView(R.layout.activity_attachments_get_all);
         final Map<String, String> map = new HashMap<String, String>();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONArray[] jsonArray = {null};
-        String url = getString(R.string.ip) + "/projektz/histories/getAll";
+        String url = getString(R.string.ip) + "/projektz/attachments/getAllAtachments";
         JsonArrayRequest request2 = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
@@ -57,22 +58,21 @@ public class HistoryGetAllActivity extends AppCompatActivity {
                             for (int i = 0; i < len; i++) {
                                 try {
                                     JSONObject jsonObject = (JSONObject) jsonArray[0].get(i);
-                                    JSONObject jsonObject1 = (JSONObject) jsonObject.get("user");
-                                    value.add(i,"Login: " + jsonObject1.getString("login") + "\n"+ "Date: " + jsonObject.getString("date")+ "\n" + "Description: " + jsonObject.getString("description"));
-                                    map.put(jsonObject1.getString("login"),jsonObject.getString("id"));
+                                    value.add(i,"Name: " + jsonObject.getString("name") + "\n"+ "File name: " + jsonObject.getString("file_name")+ "\n" + "Type: " + jsonObject.getString("mine_type"));
+                                    map.put(jsonObject.getString("name"),jsonObject.getString("id"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         }
-                        final ListView listview = (ListView) findViewById(R.id.lvHistoryGetAll);
+                        final ListView listview = (ListView) findViewById(R.id.lvAttachmentsGetAll);
                         Iterator it = value.iterator();
 
                         final ArrayList<String> list = new ArrayList<String>();
                         while (it.hasNext()) {
                             list.add((String) it.next());
                         }
-                        final StableArrayAdapter adapter = new StableArrayAdapter(HistoryGetAllActivity.this,
+                        final StableArrayAdapter adapter = new StableArrayAdapter(AttachmentsGetAllActivity.this,
                                 android.R.layout.simple_list_item_1, list);
                         assert listview != null;
                         listview.setAdapter(adapter);
@@ -81,20 +81,20 @@ public class HistoryGetAllActivity extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                                    final String aTekst = ((TextView)view).getText().toString();
-                                    String aName = String.valueOf(aTekst.charAt(7));
-                                    for (int i = 8; i < aTekst.length();i++)
-                                    {
-                                        if(aTekst.charAt(i)=='\n') {
-                                            break;
-                                        }else aName = aName + String.valueOf(aTekst.charAt(i));
-                                    }
-                                    String value = map.get(aName);
+                                final String aTekst = ((TextView)view).getText().toString();
+                                String aName = String.valueOf(aTekst.charAt(6));
+                                for (int i = 7; i < aTekst.length();i++)
+                                {
+                                    if(aTekst.charAt(i)=='\n') {
+                                        break;
+                                    }else aName = aName + String.valueOf(aTekst.charAt(i));
+                                }
+                                String value = map.get(aName);
 
 
-                                Intent intent = new Intent(HistoryGetAllActivity.this, HistoryDetailsActivity.class);
-                                        intent.putExtra("id", value);
-                                HistoryGetAllActivity.this.startActivity(intent);
+                                Intent intent = new Intent(AttachmentsGetAllActivity.this, AttachmentsDetailsActivity.class);
+                                intent.putExtra("id", value);
+                                AttachmentsGetAllActivity.this.startActivity(intent);
 
                             }
                         });
@@ -149,5 +149,7 @@ public class HistoryGetAllActivity extends AppCompatActivity {
         }
     }
 }
+
+
 
 

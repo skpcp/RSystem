@@ -33,13 +33,13 @@ public class HistorySaveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_save);
 
-        final EditText etDescription = (EditText) findViewById(R.id.etDescriptionHistorySave);
-        final Button btSave = (Button) findViewById(R.id.btSaveHistorySave);
+        final EditText etDescription = (EditText) findViewById(R.id.etDescriptionHistorySaveWithAttachment);
+        final Button btSave = (Button) findViewById(R.id.btSaveHistorySaveWithAttachment);
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final String user = "GandalfTheGray";
         //final String type = "WEWNETRZNY";
 
-        final Spinner spinner = (Spinner) findViewById(R.id.spinnerTypeHistorySave);
+        final Spinner spinner = (Spinner) findViewById(R.id.spinnerTypeHistorySaveWithAttachment);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.type_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
