@@ -1,12 +1,14 @@
 package com.example.bidzis.rsystem.Ticket;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -31,22 +33,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-public class GetTicketsByPriorityActivity extends AppCompatActivity {
+public class GetTicketByProjectListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_tickets_by_priority);
+        setContentView(R.layout.activity_get_ticket_by_project_list);
 
-
-        Bundle extras = getIntent().getExtras();
-        final String aIdUser = extras.getString("id");
-
+        final Map<String, String> map = new HashMap<String, String>();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONArray[] jsonArray = {null};
         final JSONObject[] jsonObject = {new JSONObject()};
-        String url = getString(R.string.ip)+"/projektz/tickets/getTicketsByPriority/"+aIdUser;
+        String url = getString(R.string.ip)+"/projektz/projects/getAll";
         JsonArrayRequest request = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
@@ -58,33 +58,41 @@ public class GetTicketsByPriorityActivity extends AppCompatActivity {
                             int len = jsonArray[0].length();
                             for (int i=0;i<len;i++){
                                 try {
-                                    JSONObject jsonObject = (JSONObject) jsonArray[0].get(i);
-                                    JSONObject userJson = (JSONObject) jsonObject.get("user");
-                                    JSONObject projectObject = (JSONObject) jsonObject.get("project");
-                                    JSONObject priorityObject = (JSONObject) jsonObject.get("priority");
-
-                                    value.add(i,"Kind: "+ jsonObject.getString("kind")+"\nType: "+jsonObject.getString("type")+"\n"+userJson.getString("name")+" "+userJson.getString("surname")+"\nProject: "+projectObject.getString("name")+ " ver. "+projectObject.getString("version")+"\nPriority: "+priorityObject.getString("name")+"\nResponse Time: "+priorityObject.getString("responseTime"));
-
+                                    jsonObject[0] = (JSONObject) jsonArray[0].get(i);
+                                    JSONObject priorityJson = (JSONObject) jsonObject[0].get("priority");
+                                    value.add(i, jsonObject[0].getString("name")+" ver. "+jsonObject[0].getString("version")+"\nPriority: "+priorityJson.getString("name")+"\nResponse Time: "+priorityJson.getString("responseTime"));
+                                    map.put(jsonObject[0].getString("name"),jsonObject[0].getString("id"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         }
-                        final ListView listview= (ListView) findViewById(R.id.listViewGetTicketsByPriority);
+                        final ListView listview = (ListView) findViewById(R.id.listViewgetTicketByProjectList);
                         Iterator it = value.iterator();
 
                         final ArrayList<String> list = new ArrayList<String>();
                         while ( it.hasNext( ) ) {
                             list.add((String) it.next());
                         }
-                        final StableArrayAdapter adapter = new StableArrayAdapter(GetTicketsByPriorityActivity.this,
+                        final StableArrayAdapter adapter = new StableArrayAdapter(GetTicketByProjectListActivity.this,
                                 android.R.layout.simple_list_item_1, list);
                         listview.setAdapter(adapter);
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
+                                final String aTekst = ((TextView)view).getText().toString();
+                                String aName = String.valueOf(aTekst.charAt(0));
+                                for (int i = 1; i < aTekst.length();i++)
+                                {
+                                    if(aTekst.charAt(i)==' ') {
+                                        break;
+                                    }else aName = aName + String.valueOf(aTekst.charAt(i));
+                                }
+                                String value = map.get(aName);
+                                Intent intent  = new Intent(GetTicketByProjectListActivity.this, GetTicketsByProjectActivity.class);
+                                intent.putExtra("id",value);
+                                GetTicketByProjectListActivity.this.startActivity(intent);
                             }
                         });
                     }

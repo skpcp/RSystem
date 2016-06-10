@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.bidzis.rsystem.R;
+import com.example.bidzis.rsystem.Ticket.TicketMenagmentActivity;
 import com.example.bidzis.rsystem.UserSettings.UserSettingsActivity;
 
 public class UserSiteActivity extends AppCompatActivity
@@ -97,6 +98,8 @@ public class UserSiteActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
 //            Bundle extras = getIntent().getExtras();
 //            final String aId = extras.getString("id");
+            Intent intent  = new Intent(UserSiteActivity.this, TicketMenagmentActivity.class);
+            UserSiteActivity.this.startActivity(intent);
 
         } else if (id == R.id.nav_slideshow) {
 

@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bidzis.rsystem.Ticket.SendTicketActivity;
+import com.example.bidzis.rsystem.User.SimpleUserSiteActivity;
 import com.example.bidzis.rsystem.User.UserManagementActivity;
 import com.example.bidzis.rsystem.User.UserSiteActivity;
 import com.example.bidzis.rsystem.UserSettings.UserSettingsActivity;
@@ -66,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     public void singInUser(JSONObject userLogin){
-        Intent intent  = new Intent(LoginActivity.this, UserSiteActivity.class);
-        LoginActivity.this.startActivity(intent);
+//        Intent intent  = new Intent(LoginActivity.this, UserSiteActivity.class);
+//        LoginActivity.this.startActivity(intent);
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url  = getString(R.string.ip) + "/projektz/users/userLogin";
         JsonObjectRequest request = new JsonObjectRequest
@@ -86,6 +87,15 @@ public class LoginActivity extends AppCompatActivity {
                                     intent.putExtra("login",response.getString("login"));
 
 
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                LoginActivity.this.startActivity(intent);
+                            }else {
+                                Intent intent  = new Intent(LoginActivity.this, SimpleUserSiteActivity.class);
+                                try {
+                                    intent.putExtra("id",response.getString("id"));
+                                    intent.putExtra("login",response.getString("login"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

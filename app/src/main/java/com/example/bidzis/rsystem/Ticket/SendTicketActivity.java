@@ -59,7 +59,8 @@ public class SendTicketActivity extends AppCompatActivity {
         final Spinner spinnerPriority = (Spinner) findViewById(R.id.spinner);
 
 
-        final String user = "GandalfTheGray";
+        Bundle extras = getIntent().getExtras();
+        final String user = extras.getString("login");
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.priority_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

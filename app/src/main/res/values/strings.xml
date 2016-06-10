@@ -20,5 +20,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string-array name="ticketType_array">
+        <item>ZGLOSZENIE</item>
+        <item>SUGESTIA</item>
+        <item>BLAD</item>
+    </string-array>
 
 </resources>

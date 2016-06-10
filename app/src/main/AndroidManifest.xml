@@ -34,10 +34,22 @@
         <activity android:name=".UserSettings.ChangePasswordActivity" />
         <activity android:name=".User.UpdateProjectForUserActivity" />
         <activity android:name=".User.UpdateProjectForUserProjectListActivity" />
+        <activity android:name=".Ticket.GetTicketByTypeActivity" />
+        <activity android:name=".Ticket.GetAllActivity" />
+        <activity android:name=".Ticket.GetTicketsByPriorityActivity" />
+        <activity android:name=".Ticket.GetTicketsByProjectActivity" />
+        <activity android:name=".Ticket.GetTicketsByUserActivity" />
+        <activity android:name=".Ticket.GetByTypeActivity" />
+        <activity android:name=".Ticket.TicketMenagmentActivity" />
         <activity
             android:name=".User.UserSiteActivity"
             android:label="@string/title_activity_user_site"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Ticket.GetTicketByTicketTypeListPriorityActivity" />
+        <activity android:name=".Ticket.GetTicketByProjectListActivity" />
+        <activity android:name=".Ticket.GetTicketsByUserListActivity" />
+        <activity android:name=".Ticket.RemoveTicketActivity" />
+        <activity android:name=".User.SimpleUserSiteActivity"></activity>
     </application>
 
 </manifest>

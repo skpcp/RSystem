@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -20,6 +21,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bidzis.rsystem.R;
 
@@ -31,22 +33,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-public class GetTicketsByPriorityActivity extends AppCompatActivity {
+public class RemoveTicketActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_tickets_by_priority);
+        setContentView(R.layout.activity_remove_ticket);
 
-
-        Bundle extras = getIntent().getExtras();
-        final String aIdUser = extras.getString("id");
-
+        final Map<String, String> map = new HashMap<String, String>();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONArray[] jsonArray = {null};
-        final JSONObject[] jsonObject = {new JSONObject()};
-        String url = getString(R.string.ip)+"/projektz/tickets/getTicketsByPriority/"+aIdUser;
+        String url = getString(R.string.ip)+"/projektz/tickets/getAll";
         JsonArrayRequest request = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
@@ -63,28 +62,73 @@ public class GetTicketsByPriorityActivity extends AppCompatActivity {
                                     JSONObject projectObject = (JSONObject) jsonObject.get("project");
                                     JSONObject priorityObject = (JSONObject) jsonObject.get("priority");
 
-                                    value.add(i,"Kind: "+ jsonObject.getString("kind")+"\nType: "+jsonObject.getString("type")+"\n"+userJson.getString("name")+" "+userJson.getString("surname")+"\nProject: "+projectObject.getString("name")+ " ver. "+projectObject.getString("version")+"\nPriority: "+priorityObject.getString("name")+"\nResponse Time: "+priorityObject.getString("responseTime"));
 
+
+                                    value.add(i,"Project: "+projectObject.getString("name")+" ver. "+projectObject.getString("version")+"\nKind: "+ jsonObject.getString("kind")+"\nType: "+jsonObject.getString("type")+"\n"+userJson.getString("name")+" "+userJson.getString("surname")+"\nPriority: "+priorityObject.getString("name")+"\nResponse Time: "+priorityObject.getString("responseTime"));
+                                    map.put(projectObject.getString("name"),jsonObject.getString("id"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         }
-                        final ListView listview= (ListView) findViewById(R.id.listViewGetTicketsByPriority);
+
+                        final ListView listview = (ListView) findViewById(R.id.listViewRemoveTicket);
                         Iterator it = value.iterator();
 
                         final ArrayList<String> list = new ArrayList<String>();
                         while ( it.hasNext( ) ) {
                             list.add((String) it.next());
                         }
-                        final StableArrayAdapter adapter = new StableArrayAdapter(GetTicketsByPriorityActivity.this,
+                        final StableArrayAdapter adapter = new StableArrayAdapter(RemoveTicketActivity.this,
                                 android.R.layout.simple_list_item_1, list);
                         listview.setAdapter(adapter);
                         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                                final String aTekst = ((TextView)view).getText().toString();
+                                String aName = String.valueOf(aTekst.charAt(9));
+                                for (int i = 10; i < aTekst.length();i++)
+                                {
+                                    if(aTekst.charAt(i)==' ') {
+                                        break;
+                                    }else aName = aName + String.valueOf(aTekst.charAt(i));
+                                }
+                                String value = map.get(aName);
+                                String url = getString(R.string.ip)+"/projektz/tickets/removeTicketById/"+value;
+                                JsonObjectRequest request = new JsonObjectRequest
+                                        (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
 
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                Toast.makeText(getApplicationContext(), "Remove Ticket Succesful",
+                                                        Toast.LENGTH_LONG).show();
+
+                                            }
+                                        }, new Response.ErrorListener() {
+
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                                    Toast.makeText(getApplicationContext(), "Timeout",
+                                                            Toast.LENGTH_LONG).show();
+                                                } else if (error instanceof AuthFailureError) {
+                                                    Toast.makeText(getApplicationContext(), "1",
+                                                            Toast.LENGTH_LONG).show();
+                                                } else if (error instanceof ServerError) {
+                                                    Toast.makeText(getApplicationContext(), "Bląd serwera",
+                                                            Toast.LENGTH_LONG).show();
+                                                } else if (error instanceof NetworkError) {
+                                                    Toast.makeText(getApplicationContext(), "Problem z połączeniem internetowym",
+                                                            Toast.LENGTH_LONG).show();
+
+                                                } else if (error instanceof ParseError) {
+                                                    Toast.makeText(getApplicationContext(), "Activate Succesful",
+                                                            Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+                                requestQueue.add(request);
                             }
                         });
                     }
