@@ -49,7 +49,29 @@
         <activity android:name=".Ticket.GetTicketByProjectListActivity" />
         <activity android:name=".Ticket.GetTicketsByUserListActivity" />
         <activity android:name=".Ticket.RemoveTicketActivity" />
-        <activity android:name=".User.SimpleUserSiteActivity"></activity>
+        <activity android:name=".User.SimpleUserSiteActivity"/>
+        <activity android:name=".Permission.PermissionManagementActivity" />
+        <activity android:name=".Permission.PermissionGetAllActivity" />
+        <activity android:name=".Permission.PermissionSaveActivity" />
+        <activity android:name=".Permission.PermissionRemoveActivity" />
+        <activity android:name=".History.HistoryManagementActivity" />
+        <activity android:name=".History.HistoryGetAllActivity" />
+        <activity android:name=".History.HistoryRemoveActivity" />
+        <activity android:name=".History.HistorySaveActivity" />
+        <activity android:name=".History.HistoryDetailsActivity" />
+        <activity android:name=".Project.ProjectManagementActivity" />
+        <activity android:name=".Project.ProjectGetAllActivity" />
+        <activity android:name=".Project.ProjectChangeNameActivity" />
+        <activity android:name=".Project.ProjectRemoveActivity" />
+        <activity android:name=".Project.ProjectSaveActivity" />
+        <activity android:name=".Project.ProjectDetailsActivity" />
+        <activity android:name=".Project.ProjectChangeNameResultActivity" />
+        <activity android:name=".History.HistorySaveWithAttachmentActivity" />
+        <activity android:name=".Attachments.AttachmentsManagementActivity" />
+        <activity android:name=".Attachments.AttachmentsGetByMineTypeActivity" />
+        <activity android:name=".Attachments.AttachmentsGetAllActivity" />
+        <activity android:name=".Attachments.AttachmentsRemoveActivity" />
+        <activity android:name=".Attachments.AttachmentsDetailsActivity"></activity>
     </application>
 
 </manifest>

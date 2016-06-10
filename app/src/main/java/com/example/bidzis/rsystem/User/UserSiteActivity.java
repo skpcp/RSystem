@@ -14,6 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.bidzis.rsystem.Attachments.AttachmentsManagementActivity;
+import com.example.bidzis.rsystem.History.HistoryManagementActivity;
+import com.example.bidzis.rsystem.Permission.PermissionManagementActivity;
+import com.example.bidzis.rsystem.Project.ProjectManagementActivity;
 import com.example.bidzis.rsystem.R;
 import com.example.bidzis.rsystem.Ticket.TicketMenagmentActivity;
 import com.example.bidzis.rsystem.UserSettings.UserSettingsActivity;
@@ -102,9 +106,18 @@ public class UserSiteActivity extends AppCompatActivity
             UserSiteActivity.this.startActivity(intent);
 
         } else if (id == R.id.nav_slideshow) {
+            Intent intent  = new Intent(UserSiteActivity.this, AttachmentsManagementActivity.class);
+            UserSiteActivity.this.startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
-
+            Intent intent  = new Intent(UserSiteActivity.this, HistoryManagementActivity.class);
+            UserSiteActivity.this.startActivity(intent);
+        }else if (id == R.id.nav_Permission) {
+            Intent intent  = new Intent(UserSiteActivity.this, PermissionManagementActivity.class);
+            UserSiteActivity.this.startActivity(intent);
+        }else if (id == R.id.nav_project) {
+            Intent intent  = new Intent(UserSiteActivity.this, ProjectManagementActivity.class);
+            UserSiteActivity.this.startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

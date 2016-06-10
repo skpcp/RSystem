@@ -22,6 +22,7 @@ public class TicketMenagmentActivity extends AppCompatActivity {
         final Button btGetByProjectTicketMenagment = (Button) findViewById(R.id.btGetByProjectTicketMenagment);
         final Button btGetByUserTicketMenagment = (Button) findViewById(R.id.btGetByUserTicketMenagment);
         final Button btRemoveTicketTicketMenagment = (Button) findViewById(R.id.btRemoveTicketTicketMenagment);
+        String test = "";
 
 
         assert btGetAllTicketMenagment != null;

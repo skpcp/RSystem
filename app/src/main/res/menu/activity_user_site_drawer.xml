@@ -10,11 +10,16 @@
             android:title="Ticket Management" />
         <item
             android:id="@+id/nav_slideshow"
-            android:title="Slideshow" />
+            android:title="Attachments Management" />
         <item
             android:id="@+id/nav_manage"
-
-            android:title="Tools" />
+            android:title="History Management" />
+        <item
+            android:id="@+id/nav_Permission"
+            android:title="Permission Management" />
+        <item
+            android:id="@+id/nav_project"
+            android:title="Project Management" />
 
 
 </menu>
